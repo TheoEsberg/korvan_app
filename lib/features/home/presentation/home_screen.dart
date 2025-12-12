@@ -14,10 +14,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late final List<Widget> _pages = const [
     ScheduleScreen(),
-    OffersScreen(),
-    TodayScreen(),
-    NotificationsScreen(),
-    ProfileScreen(),
+    // OffersScreen(),
+    // TodayScreen(),
+    // NotificationsScreen(),
+    // ProfileScreen(),
   ];
 
   final List<String> _titles = const [

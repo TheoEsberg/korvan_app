@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:korvan_app/features/auth/presentation/auth_provider.dart';
+import 'package:korvan_app/features/home/presentation/home_screen.dart';
 import 'package:korvan_app/features/schedule/presentation/schedule_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -40,9 +41,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (success) {
       if (!mounted) return;
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const ScheduleScreen()),
-      );
+      Navigator.of(
+        context,
+      ).pushReplacement(MaterialPageRoute(builder: (_) => const HomeScreen()));
     } else {
       if (!mounted) return;
       final msg = auth.errorMessage ?? "Login failed";
