@@ -40,7 +40,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> logout() async {
-    // TODO: Clear tokens from storage
+    await AuthService.clearTokens();
     _status = AuthStatus.initial;
     _errorMessage = null;
     notifyListeners();

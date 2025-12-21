@@ -22,7 +22,11 @@ class TodayScreen extends StatelessWidget {
             }
 
             if (snapshot.hasError) {
-              return const Text('Could not load today\'s shift');
+              return Text(
+                'Could not load today\'s shift:\n${snapshot.error}',
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.red),
+              );
             }
 
             final shift = snapshot.data;
@@ -37,8 +41,7 @@ class TodayScreen extends StatelessWidget {
               );
             }
 
-            final timeText =
-                "${shift.startTime.formatHHmm()} - ${shift.endTime.formatHHmm()}";
+            final timeText = shift.formatTimeRange();
 
             return _TodayCard(
               title: "Working",
@@ -100,6 +103,7 @@ class _TodayCard extends StatelessWidget {
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: Colors.grey[700],
               ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
             Text(dateText, style: theme.textTheme.titleMedium),

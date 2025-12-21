@@ -1,47 +1,57 @@
 class ShiftModel {
   final String id;
-  final DateTime shiftDate;
+  final DateTime date;
   final DateTime startTime;
   final DateTime endTime;
+  final String notes;
+  final String status;
+  final String? employeeId;
+  final String? employeeName;
+  final String? employeeColorHex;
+  final String? employeeAvatarUrl;
 
   ShiftModel({
     required this.id,
-    required this.shiftDate,
+    required this.date,
     required this.startTime,
     required this.endTime,
+    required this.notes,
+    required this.status,
+    this.employeeId,
+    this.employeeName,
+    this.employeeColorHex,
+    this.employeeAvatarUrl,
   });
 
   factory ShiftModel.fromJson(Map<String, dynamic> json) {
-    // Might need to change so that backend returns
-    // "shiftDate": "2025-12-03",
-    // "startTime": "07:00:00",
-    // "endTime": "16:00:00"
-
     final date = DateTime.parse(json['shiftDate']);
-    final start = _parseDateTime(date, json['startTime']);
-    final end = _parseDateTime(date, json['endTime']);
+    final start = _parseTimeOnDate(date, json['startTime']);
+    final end = _parseTimeOnDate(date, json['endTime']);
 
     return ShiftModel(
-      id: json['id'],
-      shiftDate: date,
+      id: json['id'].toString(),
+      date: date,
       startTime: start,
       endTime: end,
+      notes: (json['notes'] ?? '').toString(),
+      status: json['status'].toString(),
+      employeeId: json['employeeId']?.toString(),
+      employeeName: json['employeeName']?.toString(),
+      employeeColorHex: json['employeeColorHex']?.toString(),
+      employeeAvatarUrl: json['employeeAvatarUrl']?.toString(),
     );
   }
 
-  static DateTime _parseDateTime(DateTime baseDate, String time) {
-    // Time like "07:00:00" or "07:00"
+  static DateTime _parseTimeOnDate(DateTime base, String time) {
     final parts = time.split(':');
     final hour = int.parse(parts[0]);
     final minute = int.parse(parts[1]);
-    return DateTime(baseDate.year, baseDate.month, baseDate.day, hour, minute);
+    return DateTime(base.year, base.month, base.day, hour, minute);
   }
-}
 
-extension ShiftTimeFormat on DateTime {
-  String formatHHmm() {
-    final hh = hour.toString().padLeft(2, '0');
-    final mm = minute.toString().padLeft(2, '0');
-    return "$hh:$mm";
+  String formatTimeRange() {
+    String fmt(DateTime t) =>
+        '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
+    return '${fmt(startTime)} – ${fmt(endTime)}';
   }
 }

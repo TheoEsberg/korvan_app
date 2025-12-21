@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:korvan_app/features/notifications/presentation/notifications_screen.dart';
+import 'package:korvan_app/features/offers/presentation/offers_screen.dart';
+import 'package:korvan_app/features/profile/presentation/profile_screen.dart';
 import 'package:korvan_app/features/schedule/presentation/schedule_screen.dart';
+import 'package:korvan_app/features/today/presentation/today_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,10 +18,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late final List<Widget> _pages = const [
     ScheduleScreen(),
-    // OffersScreen(),
-    // TodayScreen(),
-    // NotificationsScreen(),
-    // ProfileScreen(),
+    OffersScreen(),
+    TodayScreen(),
+    NotificationsScreen(),
+    ProfileScreen(),
   ];
 
   final List<String> _titles = const [
