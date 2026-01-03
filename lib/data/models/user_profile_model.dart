@@ -4,7 +4,7 @@ class UserProfileModel {
   final String email;
   final String role;
   final String? profileColorHex;
-  final String? avatarUrl;
+  final bool hasAvatar;
 
   UserProfileModel({
     required this.id,
@@ -12,7 +12,7 @@ class UserProfileModel {
     required this.email,
     required this.role,
     this.profileColorHex,
-    this.avatarUrl,
+    required this.hasAvatar,
   });
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {
@@ -22,7 +22,7 @@ class UserProfileModel {
       email: json['email'] ?? '',
       role: json['role'] ?? '',
       profileColorHex: json['profileColorHex'],
-      avatarUrl: json['avatarUrl'],
+      hasAvatar: json['hasAvatar'] ?? false,
     );
   }
 }

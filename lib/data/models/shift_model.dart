@@ -9,6 +9,7 @@ class ShiftModel {
   final String? employeeName;
   final String? employeeColorHex;
   final String? employeeAvatarUrl;
+  final bool employeeHasAvatar;
 
   ShiftModel({
     required this.id,
@@ -21,6 +22,7 @@ class ShiftModel {
     this.employeeName,
     this.employeeColorHex,
     this.employeeAvatarUrl,
+    required this.employeeHasAvatar,
   });
 
   factory ShiftModel.fromJson(Map<String, dynamic> json) {
@@ -39,6 +41,7 @@ class ShiftModel {
       employeeName: json['employeeName']?.toString(),
       employeeColorHex: json['employeeColorHex']?.toString(),
       employeeAvatarUrl: json['employeeAvatarUrl']?.toString(),
+      employeeHasAvatar: json['employeeHasAvatar'] ?? false,
     );
   }
 

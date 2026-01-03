@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:korvan_app/data/services/api_service.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:korvan_app/data/models/shift_model.dart';
 import 'package:korvan_app/data/services/schedule_service.dart';
@@ -196,14 +197,42 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               separatorBuilder: (_, __) => const SizedBox(height: 8),
               itemBuilder: (context, index) {
                 final shift = shifts[index];
+                final color = _colorFromHex(shift.employeeColorHex);
+                final name = shift.employeeName ?? "Unassigned";
+                final initials = name
+                    .trim()
+                    .split(' ')
+                    .map((e) => e[0])
+                    .take(2)
+                    .join();
+
+                final avatarUrl =
+                    (shift.employeeAvatarUrl != null && shift.employeeHasAvatar)
+                    ? "${ApiService.baseUrl}${shift.employeeAvatarUrl!}?ts=${shift.id}"
+                    : null;
+
                 return Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: ListTile(
-                    leading: const Icon(Icons.work_outline),
+                    leading: CircleAvatar(
+                      backgroundColor: color.withAlpha(100),
+                      backgroundImage: avatarUrl != null
+                          ? NetworkImage(avatarUrl)
+                          : null,
+                      child: avatarUrl == null
+                          ? Text(
+                              initials,
+                              style: TextStyle(
+                                color: color,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            )
+                          : null,
+                    ),
                     title: Text(
-                      shift.employeeName ?? "You",
+                      name,
                       style: const TextStyle(fontWeight: FontWeight.w600),
                     ),
                     subtitle: Text(shift.formatTimeRange()),
