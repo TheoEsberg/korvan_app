@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:korvan_app/data/models/user_list_model.dart';
 import 'package:korvan_app/data/models/user_model.dart';
 import 'package:korvan_app/data/services/admin_schedule_service.dart';
 import 'package:korvan_app/data/services/user_service.dart';
@@ -17,7 +18,7 @@ class _CreateShiftScreenState extends State<CreateShiftScreen> {
   TimeOfDay? _endTime;
   String? _selectedUserId;
 
-  late Future<List<UserModel>> _usersFuture;
+  late Future<List<UserListModel>> _usersFuture;
 
   bool loading = false;
 
@@ -93,7 +94,7 @@ class _CreateShiftScreenState extends State<CreateShiftScreen> {
         child: Column(
           children: [
             // Employee dropdown populated from backend
-            FutureBuilder<List<UserModel>>(
+            FutureBuilder<List<UserListModel>>(
               future: _usersFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {

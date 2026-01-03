@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:korvan_app/data/services/api_service.dart';
+import 'package:korvan_app/features/admin/presentation/admin_schedule_builder_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:korvan_app/data/models/user_profile_model.dart';
 import 'package:korvan_app/data/services/user_service.dart';
@@ -292,7 +293,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onPressed: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (_) => const CreateShiftScreen(),
+                                  builder: (_) =>
+                                      const AdminScheduleBuilderScreen(),
                                 ),
                               );
                             },

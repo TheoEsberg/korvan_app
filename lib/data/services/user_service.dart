@@ -2,24 +2,22 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:korvan_app/data/models/user_list_model.dart';
 import 'package:korvan_app/data/models/user_model.dart';
 import 'package:korvan_app/data/models/user_profile_model.dart';
 import 'package:korvan_app/data/services/api_service.dart';
 import 'package:korvan_app/data/services/auth_service.dart';
 
 class UserService {
-  static Future<List<UserModel>> getEmployees() async {
+  static Future<List<UserListModel>> getEmployees() async {
     final token = await AuthService.getAccessToken();
-    if (token == null) throw Exception("Not Authenticated");
+    if (token == null) throw Exception("Not authenticated");
 
-    final response = await ApiService.get("/api/users", token);
+    final res = await ApiService.get("/api/users", token);
+    if (res.statusCode != 200) throw Exception("Failed: ${res.statusCode}");
 
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-      return data.map((e) => UserModel.fromJson(e)).toList();
-    } else {
-      throw Exception("Failed to load users");
-    }
+    final list = jsonDecode(res.body) as List;
+    return list.map((e) => UserListModel.fromJson(e)).toList();
   }
 
   static Future<UserProfileModel> getMe() async {
